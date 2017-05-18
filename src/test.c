@@ -6,9 +6,12 @@
 #include "sections.h"
 #include "books.h"
 #include "stack.h"
-#define BOOK1 "9780201625714 1995 0 6 8 WEI Estructuras_de_datos_y_algoritmos"
+/*#define BOOK1 "9780201625714 1995 0 6 8 WEI Estructuras_de_datos_y_algoritmos"
 #define BOOK2 "9780140816167 1996 1 8 1 WAT Test_your_vocabulary"
-#define BOOK3 "9788489660007 1997 1 6 7 BRA Fundamentos_de_algoritmia"
+#define BOOK3 "9788489660007 1997 1 6 7 BRA Fundamentos_de_algoritmia"*/
+#define BOOK1 "1 1995 0 6 8 WEI Estructuras_de_datos_y_algoritmos"
+#define BOOK2 "2 1996 1 8 1 WAT Test_your_vocabulary"
+#define BOOK3 "3 1997 1 6 7 BRA Fundamentos_de_algoritmia"
 #define SECTION1 "1 Philosophy"
 #define SECTION2 "2 Religion"
 #define SECTION3 "3 Social"
@@ -548,7 +551,7 @@ void test_sort(int *totalTest, int *passedTest) {
 				printf("\n\t-> FAIL (unexpected return value from addBook adding last object. Expected %d and returned %d)\n", ERR_MEMORY, retVal);
 			} 
 		}
-	}		
+	}
 	
 	printf("\nTest 1b1: Sort empty table:");
 	(*totalTest)++;
@@ -567,6 +570,7 @@ void test_sort(int *totalTest, int *passedTest) {
 	bookTable_init(&books);
 	test_initBookTable(&books,BOOK3,BOOK1,BOOK2,&book3,&book1,&book2);
 	bookTable_sort(books, &result);
+
 	if(result.size==3) {
 		if(book_cmp(result.table[0], book3)!=0 ||
 			book_cmp(result.table[1], book1)!=0 ||
@@ -586,6 +590,7 @@ void test_sort(int *totalTest, int *passedTest) {
 	bookTable_init(&books);		
 	test_initBookTable(&books,BOOK1,BOOK2,BOOK3,&book1,&book2,&book3);
 	bookTable_sort(books, &result);
+
 	if(result.size==3) {
 		if(book_cmp(result.table[0], book3)!=0 ||
 			book_cmp(result.table[1], book1)!=0 ||

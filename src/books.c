@@ -3,7 +3,6 @@
 #include <string.h>
 #include "books.h"
 
-
 void getBookStr(tBook book, int maxSize, char *str) {
 	int length;
 	unsigned short int tmpAvail;
@@ -40,7 +39,7 @@ void bookTable_init(tBookTable *bookTable) {
 int book_cmp(tBook b1, tBook b2) {
 	
 	int retVal=0;
-	
+    
 	if (b1.clas.secId>b2.clas.secId)  retVal = 1;
 	else if (b1.clas.secId<b2.clas.secId)  retVal = -1;
 	else {
@@ -241,8 +240,8 @@ unsigned int bookTable_getAuthorNumber(tBookTable tabBook, char *author){
 /******************** PR2 - EX1A ********************/
 tError bookTable_sortedAdd(tBookTable *tabBook, tBook book){
 	tError retVal = OK;
-	tBook bookMemory;
 	unsigned int i;
+    tBook bookMemory;
 
 #ifdef SIMPLE_VERSION
 
@@ -253,35 +252,24 @@ tError bookTable_sortedAdd(tBookTable *tabBook, tBook book){
 	
 	if (retVal == OK) {
 		
+        //Add book to the table
 		bookTable_add(tabBook,book);
-		//printf("\n1: %s \n",tabBook->table[0].ISBN);
-		//printf("2: %s \n",tabBook->table[1].ISBN);	
+
+        //Check correct order of books
 		for(i=0;i<tabBook->size;i++) {
-			/* Add the new book to the end of the table */
+            
 			if(book_cmp(tabBook->table[i], book)==1) {
-				bookMemory = tabBook->table[i];
+                bookMemory = tabBook->table[i];
+                //Delete book of the table 
 				bookTable_del(tabBook, bookMemory);
-				bookTable_add(tabBook,bookMemory);
-				//bookTable_add(tabBook,bookMemory);			
+                
+                // Add deleted book to the end of the table (itineration)
+                bookTable_sortedAdd(tabBook,bookMemory);
 			}
 		}
-		//printf("3: %s \n",tabBook->table[0].ISBN);
-		//printf("4: %s \n",tabBook->table[1].ISBN);		
-		//book_cpy(&tabBook->table[tabBook->size],book);
-		//tabBook->size++;
-		//printf("Size: %d \n",tabBook->size);
 	}
-	
+
 	return retVal;
-
-
-
-
-
-
-
-
-
 
 #endif
 #ifdef COMPLETE_VERSION
@@ -294,6 +282,15 @@ tError bookTable_sortedAdd(tBookTable *tabBook, tBook book){
 
 /******************** PR2 - EX1B ********************/
 void bookTable_sort(tBookTable tabBook, tBookTable *result){
+   unsigned int i;
+   
+   //Inicialitze table
+   bookTable_init(result);	
+  
+    //Order table
+    for(i=0;i<tabBook.size;i++) {
+        bookTable_sortedAdd(result,tabBook.table[i]);
+    }
 
 }
 
