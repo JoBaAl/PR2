@@ -6,12 +6,9 @@
 #include "sections.h"
 #include "books.h"
 #include "stack.h"
-/*#define BOOK1 "9780201625714 1995 0 6 8 WEI Estructuras_de_datos_y_algoritmos"
+#define BOOK1 "9780201625714 1995 0 6 8 WEI Estructuras_de_datos_y_algoritmos"
 #define BOOK2 "9780140816167 1996 1 8 1 WAT Test_your_vocabulary"
-#define BOOK3 "9788489660007 1997 1 6 7 BRA Fundamentos_de_algoritmia"*/
-#define BOOK1 "1 1995 0 6 8 WEI Estructuras_de_datos_y_algoritmos"
-#define BOOK2 "2 1996 1 8 1 WAT Test_your_vocabulary"
-#define BOOK3 "3 1997 1 6 7 BRA Fundamentos_de_algoritmia"
+#define BOOK3 "9788489660007 1997 1 6 7 BRA Fundamentos_de_algoritmia"
 #define SECTION1 "1 Philosophy"
 #define SECTION2 "2 Religion"
 #define SECTION3 "3 Social"
@@ -683,9 +680,11 @@ void test_sectionInfo(int* totalTest, int* passedTest) {
 	printf("\nTest3: Get the section info for a section with only 1 subsection:");
 	(*totalTest)++;
 	if(si_getSectionInfo(books, sections, section8.id, &si)==OK) {
+		
 		if(si.totSecSubs!=1) {
 			printf("\n\t-> FAIL. Invalid quantities.\n");
 		} else {
+			
 			if(book_cmp(si_getBook(books,si,0,0),book2)==0) {
 				printf("\n\t-> OK\n");
 				(*passedTest)++;
@@ -720,7 +719,7 @@ void test_stack(int* totalTest, int* passedTest) {
 	/* Prepare the test data */
 	test_initBookTable(&books,BOOK1,BOOK2,BOOK3,&book1,&book2,&book3);
 
-	printf("=================================================\n");
+	printf("\n=================================================\n");
 	printf(" STACK\n");
 	printf("=================================================\n");
 	

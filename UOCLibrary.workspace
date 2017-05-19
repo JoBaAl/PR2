@@ -2,12 +2,10 @@
 <CodeLite_Workspace Name="UOCLibrary" Database="" Version="10.0.0">
   <Project Name="UOCLibrary" Path="UOCLibrary.project" Active="Yes"/>
   <BuildMatrix>
-    <WorkspaceConfiguration Name="Debug" Selected="yes">
-      <Environment/>
+    <WorkspaceConfiguration Name="Debug" Selected="no">
       <Project Name="UOCLibrary" ConfigName="Debug"/>
     </WorkspaceConfiguration>
-    <WorkspaceConfiguration Name="Release" Selected="no">
-      <Environment/>
+    <WorkspaceConfiguration Name="Release" Selected="yes">
       <Project Name="UOCLibrary" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>

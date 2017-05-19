@@ -90,7 +90,7 @@ typedef struct {
     char id;
 	/* Table of books of the subsection */
 #ifdef SIMPLE_VERSION
-        unsigned int subBooks;
+        unsigned int subBooks[MAX_BOOKS];
         unsigned int totSubBooks;
 #endif	
 #ifdef COMPLETE_VERSION	

@@ -263,7 +263,7 @@ tError bookTable_sortedAdd(tBookTable *tabBook, tBook book){
                 //Delete book of the table 
 				bookTable_del(tabBook, bookMemory);
                 
-                // Add deleted book to the end of the table (itineration)
+                // Add deleted book to the end of the table
                 bookTable_sortedAdd(tabBook,bookMemory);
 			}
 		}
