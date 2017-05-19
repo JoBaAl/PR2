@@ -65,22 +65,7 @@ tError si_getSectionInfo(tBookTable tabB, tSectionTable tabS, char sectionId, tS
 	
 	//Section doesn't exist in sections table
 	if (sectionFound == 0) retVal = ERR_INVALID_DATA;
-	
-				/*printf("\nsecSubs id 1: %c\n",si->secSubs[0].id);
-				printf("secSubs id 2: %c\n",si->secSubs[1].id);
-				printf("secSubs id 3: %c\n",si->secSubs[2].id);
-				printf("subBooks01: %d\n",si->secSubs[0].subBooks[0]);
-				printf("subBooks02: %d\n",si->secSubs[0].subBooks[1]);
-				printf("subBooks11: %d\n",si->secSubs[1].subBooks[0]);
-				printf("subBooks12: %d\n",si->secSubs[1].subBooks[1]);
-				printf("subBooks21: %d\n",si->secSubs[2].subBooks[0]);
-				printf("subBooks22: %d\n",si->secSubs[2].subBooks[1]);
-				printf("totSecSubs: %d\n",si->totSecSubs);
-				printf("totSubBooks 1: %d\n",si->secSubs[0].totSubBooks);
-				printf("totSubBooks 2: %d\n",si->secSubs[1].totSubBooks);
-				printf("totSubBooks 3: %d\n",si->secSubs[2].totSubBooks);
-				printf("totSecBooks: %d\n",si->totSecBooks);*/
-			
+				
 	#endif
 	#ifdef COMPLETE_VERSION	
 /******************** PR2 - EX6A ********************/
