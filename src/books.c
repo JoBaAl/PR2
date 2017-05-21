@@ -33,6 +33,7 @@ void bookTable_init(tBookTable *bookTable) {
 	bookTable->size=0;
 #ifdef COMPLETE_VERSION
 /******************** PR2 - EX6C ********************/
+	bookTable->table = NULL;
 #endif
 }
 
@@ -81,6 +82,16 @@ tError bookTable_add(tBookTable *tabBook, tBook book) {
 #endif
 #ifdef COMPLETE_VERSION
 /******************** PR2 - EX6D ********************/
+	if(tabBook->table==NULL) {
+		tabBook->table=(tBook*)malloc(sizeof(tBook));
+	} else {
+		tabBook->table=(tBook*)realloc(tabBook->table, (tabBook->size+1)*sizeof(tBook));
+	}
+	if(tabBook->size>=MAX_BOOKS) {
+		return ERR_MEMORY;
+	}
+
+
 #endif
 	if (retVal==OK){
 	/* Add the new book to the end of the table */
@@ -121,6 +132,12 @@ void bookTable_del(tBookTable *tabBook, tBook book) {
 		tabBook->size=tabBook->size-1;	
 #ifdef COMPLETE_VERSION
 /******************** PR2 - EX6E ********************/
+		if(tabBook->size==0) {
+			free(tabBook->table);
+			tabBook->table=NULL;
+		} else {
+			tabBook->table=(tBook*)realloc(tabBook->table, (tabBook->size+1)*sizeof(tBook));
+		}
 #endif
 	}
 }
@@ -275,6 +292,29 @@ tError bookTable_sortedAdd(tBookTable *tabBook, tBook book){
 #ifdef COMPLETE_VERSION
 /******************** PR2 - EX6D ********************/
 #endif
+	/* Check if there enough space for the new book */
+	if(tabBook->size>=MAX_BOOKS) {
+		retVal = ERR_MEMORY;
+	}
+	
+	if (retVal == OK) {
+		
+        //Add book to the table
+		bookTable_add(tabBook,book);
+
+        //Check correct order of books
+		for(i=0;i<tabBook->size;i++) {
+            
+			if(book_cmp(tabBook->table[i], book)==1) {
+                bookMemory = tabBook->table[i];
+                //Delete book of the table 
+				bookTable_del(tabBook, bookMemory);
+                
+                // Add deleted book to the end of the table
+                bookTable_sortedAdd(tabBook,bookMemory);
+			}
+		}
+	}
 
 	
 	return retVal;	
@@ -298,5 +338,10 @@ void bookTable_sort(tBookTable tabBook, tBookTable *result){
 void bookTable_release(tBookTable *tabBook) {
 #ifdef COMPLETE_VERSION
 /******************** PR2 - EX6F ********************/
+	if(tabBook->table!=0) {
+		free(tabBook->table);
+		tabBook->table=NULL;
+		tabBook->size=0;
+	}
 #endif	
 }

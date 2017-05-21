@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 #include <string.h>
 #include <api.h>
@@ -147,5 +148,18 @@ tError removeBook(tAppData *object, tBook book) {
 void appData_release (tAppData *object) {
 #ifdef COMPLETE_VERSION
 /******************** PR2 - EX6F ********************/
+	if(object->books.table!=0) {
+		free(object->books.table);
+		object->books.table=NULL;
+		object->books.size=0;
+	}
+	
+	if(object->sections.table!=0) {
+		free(object->sections.table);
+		//object->sections=NULL;
+		object->sections.size=0;
+	}
+	
+	
 #endif	
 }

@@ -1,7 +1,7 @@
-Debug/src_info.c.o: src/info.c include/info.h include/data.h \
+Release/src_api.c.o: src/api.c include/api.h include/data.h \
  include/books.h include/sections.h
 
-include/info.h:
+include/api.h:
 
 include/data.h:
 

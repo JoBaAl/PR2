@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 #include <string.h>
 #include "info.h"
@@ -23,8 +24,8 @@ tError si_getSectionInfo(tBookTable tabB, tSectionTable tabS, char sectionId, tS
 		
 		si->secSubs[i].subBooks[i] = 0;
 	}
-	si->totSecBooks = 0;
-	si->totSecSubs = 0;
+	si->totSecBooks =0;
+	si->totSecSubs =0;
 	
 	//Loop all sections
 	for(i=0;i<tabS.size;i++) {
@@ -50,7 +51,7 @@ tError si_getSectionInfo(tBookTable tabB, tSectionTable tabS, char sectionId, tS
 						//If the subsection already exist
 						}else if (si->secSubs[k].id == tabB.table[j].clas.subId){
 							si->secSubs[k].subBooks[si->secSubs[k].totSubBooks] = bookTable_find(tabB,tabB.table[j].ISBN);
-							si->secSubs[k].totSubBooks++; //One more book in the subsection
+							si->secSubs[k].totSubBooks++;//One more book in the subsection
 							break;
 						}
 						if (k == MAX_SUB) break; //If max. subsections is reached end loop
@@ -69,7 +70,68 @@ tError si_getSectionInfo(tBookTable tabB, tSectionTable tabS, char sectionId, tS
 	#endif
 	#ifdef COMPLETE_VERSION	
 /******************** PR2 - EX6A ********************/
-	#endif 			
+
+	//Initialize subsections
+	for(i=0;i<MAX_SUB;i++) {
+		si->secSubs[i].id = 0;
+		si->secSubs[i].subBooks=NULL;
+		si->secSubs[i].subBooks=(int*)malloc(sizeof(int));
+		si->secSubs[i].totSubBooks = 0;
+		
+	}
+	si->totSecBooks =0;
+	si->totSecSubs =0;
+		
+	//Loop all sections
+	for(i=0;i<tabS.size;i++) {
+		//If section exist in the table of sections
+		if(tabS.table[i].id==sectionId) {
+			sectionFound++;
+			strcpy(&si->section.id,&tabS.table[i].id);
+			strcpy(si->section.name,tabS.table[i].name);
+			
+			//Loop all books in the books table
+			for(j=0;j<tabB.size;j++) {
+				//If section exist in the books table
+				if(tabB.table[j].clas.secId==sectionId) {
+					//Loop all subsections until max. subsections of 10
+					for(k=0;k<tabB.size;k++) {
+						si->secSubs[k].subBooks=(int*)realloc(si->secSubs[k].subBooks, (si->secSubs[k].totSubBooks+1)*sizeof(int));
+						//If position in the vector is empty then add subsection
+						if(si->secSubs[k].id == 0){
+							strcpy(&si->secSubs[k].id,&tabB.table[j].clas.subId);
+							si->secSubs[k].subBooks[si->secSubs[k].totSubBooks] = bookTable_find(tabB,tabB.table[j].ISBN);
+							si->totSecSubs++; //One more subsection in the section
+							si->secSubs[k].totSubBooks++; //One more book in the subsection
+							break;
+						//If the subsection already exist
+						}else if (si->secSubs[k].id == tabB.table[j].clas.subId){
+							si->secSubs[k].subBooks[si->secSubs[k].totSubBooks] = bookTable_find(tabB,tabB.table[j].ISBN);
+							si->secSubs[k].totSubBooks++;//One more book in the subsection
+							break;
+						}
+						if (k == MAX_SUB) break; //If max. subsections is reached end loop
+					}
+					si->totSecBooks++; //One more book in the section
+				}		
+			}
+		} 
+	}
+	//No books in this section
+	if (si->totSecBooks == 0) retVal = ERR_ENTRY_NOT_FOUND;
+	
+	//Section doesn't exist in sections table
+	if (sectionFound == 0) retVal = ERR_INVALID_DATA;
+	#endif 		
+printf("\ns1: %d",si->secSubs[0].totSubBooks);
+printf("\n00: %d",si->secSubs[0].subBooks[0]);
+printf("\n01: %d",si->secSubs[0].subBooks[1]);
+printf("\n02: %d",si->secSubs[0].subBooks[2]);
+printf("\ns2: %d",si->secSubs[1].totSubBooks);	
+printf("\n10: %d",si->secSubs[1].subBooks[0]);
+printf("\n11: %d",si->secSubs[1].subBooks[1]);
+printf("\n12: %d",si->secSubs[1].subBooks[2]);
+printf("\n12: %d",si->secSubs[1].subBooks[3]);		
 
 	return retVal;
 }
@@ -86,6 +148,8 @@ tBook si_getBook(tBookTable tabB, tSectionInfo si, unsigned int nSub, unsigned i
 	#ifdef COMPLETE_VERSION
 /******************** PR2 - EX6A ********************/
 	#endif	
+	
+	book = tabB.table[si.secSubs[nSub].subBooks[nBook]];
 
 	return book;
 }
@@ -114,6 +178,17 @@ void si_listSectionInfo(tBookTable tabB, tSectionInfo si){
 	#endif
 	#ifdef COMPLETE_VERSION	
 /******************** PR2 - EX6A ********************/
+
+	getSectionStr(si.section, MAX_LINE, str);
+	printf("\nSection %s: %d subsections, %d books", str,si.totSecSubs,si.totSecBooks);
+	for(i=0;i<si.totSecSubs;i++) {
+		printf("\nSubsection %c: %d books:",si.secSubs[i].id,si.secSubs[i].totSubBooks);
+		for(j=0;j<si.secSubs[i].totSubBooks;j++) {
+			book = si_getBook(tabB,si,i,j);
+			getBookStr(book, MAX_LINE, str);
+			printf("\n%s",str);
+		}
+	}
 	#endif 			
 	
 }
