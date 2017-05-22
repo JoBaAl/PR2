@@ -19,10 +19,10 @@ tError si_getSectionInfo(tBookTable tabB, tSectionTable tabS, char sectionId, tS
 	//Initialize subsections
 	for(i=0;i<MAX_SUB;i++) {
 		si->secSubs[i].id = 0;
-		si->secSubs[i].subBooks[i]=0;
+		for(j=0;j<MAX_BOOKS;j++){
+			si->secSubs[i].subBooks[j]=0;
+		}
 		si->secSubs[i].totSubBooks = 0;
-		
-		si->secSubs[i].subBooks[i] = 0;
 	}
 	si->totSecBooks =0;
 	si->totSecSubs =0;
@@ -77,7 +77,6 @@ tError si_getSectionInfo(tBookTable tabB, tSectionTable tabS, char sectionId, tS
 		si->secSubs[i].subBooks=NULL;
 		si->secSubs[i].subBooks=(int*)malloc(sizeof(int));
 		si->secSubs[i].totSubBooks = 0;
-		
 	}
 	si->totSecBooks =0;
 	si->totSecSubs =0;
@@ -122,16 +121,7 @@ tError si_getSectionInfo(tBookTable tabB, tSectionTable tabS, char sectionId, tS
 	
 	//Section doesn't exist in sections table
 	if (sectionFound == 0) retVal = ERR_INVALID_DATA;
-	#endif 		
-printf("\ns1: %d",si->secSubs[0].totSubBooks);
-printf("\n00: %d",si->secSubs[0].subBooks[0]);
-printf("\n01: %d",si->secSubs[0].subBooks[1]);
-printf("\n02: %d",si->secSubs[0].subBooks[2]);
-printf("\ns2: %d",si->secSubs[1].totSubBooks);	
-printf("\n10: %d",si->secSubs[1].subBooks[0]);
-printf("\n11: %d",si->secSubs[1].subBooks[1]);
-printf("\n12: %d",si->secSubs[1].subBooks[2]);
-printf("\n12: %d",si->secSubs[1].subBooks[3]);		
+	#endif 			
 
 	return retVal;
 }

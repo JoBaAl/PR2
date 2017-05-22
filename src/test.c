@@ -651,7 +651,7 @@ void test_sectionInfo(int* totalTest, int* passedTest) {
 	tSection section1,section2,section3,section5,section6,section7,section8,section9;
 	tSectionInfo si;
 	
-	tBookStack stack, stackd;
+	//tBookStack stack, stackd;
 
 	test_initSecTable(&sections,SECTION1,SECTION2,SECTION3,SECTION5,SECTION6,SECTION7,SECTION8,SECTION9,
 		&section1,&section2,&section3,&section5,&section6,&section7,&section8,&section9);
@@ -831,17 +831,9 @@ void test_stack(int* totalTest, int* passedTest) {
 	bookStack_create(&stack);
 	bookStack_push(&stack, book1);
 	bookStack_push(&stack, book2);
-	/*printf("\n %s",stack.pile[0].ISBN);
-	printf("\n %s\n",stack.pile[1].ISBN);*/
 	bookStack_create(&stackd);
 	bookStack_push(&stackd, book3);
 	bookStack_transfer(&stackd,&stack);
-	/*printf("\n %s",stack.pile[0].ISBN);
-	printf("\n %s\n",stack.pile[1].ISBN);
-	
-	printf("\n %s",stackd.pile[0].ISBN);
-	printf("\n %s",stackd.pile[1].ISBN);
-	printf("\n %s",stackd.pile[3].ISBN);*/
 	
 	if (bookStack_empty(stack)!=TRUE) {
 		printf("\n\t-> FAIL, source stack not empty\n");
